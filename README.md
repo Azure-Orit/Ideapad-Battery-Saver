@@ -7,4 +7,6 @@ WIP
 
 -Set icon;
 
+-Show battery info;
+
 
