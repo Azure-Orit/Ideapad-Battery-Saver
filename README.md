@@ -1,6 +1,6 @@
 Battery Conservation Mode Setting app for Ideapads
 
-IP
+WIP
 
 # To-do list
 -Check status before openning;
