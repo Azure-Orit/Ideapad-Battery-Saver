@@ -37,7 +37,7 @@ class MyApplication : Gtk.Application {
     }
 
     internal MyApplication () {
-        Object (application_id: "org.example.checkbutton");
+        Object (application_id: "com.github.Azure-Orit.Ideapad-Battery-Saver");
     }
 }
 
