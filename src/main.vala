@@ -32,6 +32,7 @@ class MyApplication : Gtk.Application {
     protected override void activate () {
 
         var window = new MyWindow (this);
+        window.icon = new Gdk.Pixbuf.from_file("../resources/icon.svg");
         window.show_all (); //show all the things
     }
 
