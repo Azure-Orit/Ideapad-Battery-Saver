@@ -8,11 +8,16 @@ WIP
 
 Tested on IdeaPad 3 15ALC6 - already working at the device
 
+## ATENTION
+
+program only works with sudo at the moment
+
 # Dependencies
 
 - Gtk+3.0
 
 # To-do list
+- Implement pkexec
 - Check status before openning;
 
 
