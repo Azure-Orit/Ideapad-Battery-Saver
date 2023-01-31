@@ -1,3 +1,5 @@
+![icon](resources/icon.png)   Ideapad Battery Saver
+
 Battery Conservation Mode Setting app for Ideapads
 
 WIP
