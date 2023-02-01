@@ -10,10 +10,7 @@ Tested on IdeaPad 3 15ALC6 - already working at the device
 
 ## Dependencies
 
-- Gtk+3.0
-
-## Requirements
-
+- gtk+3.0-dev
 - valac
 - meson
 - ninja
