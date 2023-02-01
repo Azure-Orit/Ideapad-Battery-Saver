@@ -8,21 +8,18 @@ WIP
 
 Tested on IdeaPad 3 15ALC6 - already working at the device
 
-## ATENTION
-
-program only works with sudo at the moment
-
-# Dependencies
+## Dependencies
 
 - Gtk+3.0
 
-# Requirements
+## Requirements
 
 - valac
 - meson
 - ninja
 
-# To-do list
+## To-do list
+
 - Check status before openning;
 
 
