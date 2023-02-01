@@ -34,7 +34,8 @@ class MyApplication : Gtk.Application {
 
         var window = new MyWindow (this);
         window.icon = new Gdk.Pixbuf.from_file("/usr/local/share/BatterySaver/icon.svg");
-        window.show_all (); //show all the things
+        window.show_all ();
+        window.resizable = false;
     }
 
     internal MyApplication () {
