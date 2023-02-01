@@ -16,10 +16,15 @@ program only works with sudo at the moment
 
 - Gtk+3.0
 
+# Requirements
+
+- valac
+- meson
+- ninja
+
 # To-do list
-- Finish Meson build system
-- Implement pkexec
 - Check status before openning;
+
 
 
 
