@@ -6,7 +6,7 @@ Battery Conservation Mode Setting app for Ideapads
 
 WIP
 
-Tested on IdeaPad 3 15ALC6 - already working at the device
+Tested on IdeaPad 3 15ALC6
 
 ## Dependencies
 
