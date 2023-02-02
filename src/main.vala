@@ -1,14 +1,24 @@
 class MyWindow : Gtk.ApplicationWindow {
 
     internal MyWindow (MyApplication app) {
+
         Object (application: app, title: "Ideapad Battery Saver");
 
         this.border_width = 20;
 
         var label = new Gtk.Label ("Battery Threshold Status");
         var switcher = new Gtk.Switch ();
+        File file = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
+        FileInputStream @is = file.read ();
+	    DataInputStream dis = new DataInputStream (@is);        
+	    string line;
 
-        switcher.set_active (true);
+		while ((line = dis.read_line ()) != null) {
+			if (int.parse (line) == 1){
+                switcher.set_active (true);
+            }
+		}
+
 
         switcher.notify["active"].connect (switcher_cb);
 
@@ -20,6 +30,7 @@ class MyWindow : Gtk.ApplicationWindow {
         this.add (grid);
         
     }
+
 
     void switcher_cb (Object switcher, ParamSpec pspec) {
         if ((switcher as Gtk.Switch).get_active())
@@ -34,7 +45,7 @@ class MyApplication : Gtk.Application {
 
         var window = new MyWindow (this);
         window.icon = new Gdk.Pixbuf.from_file("/usr/local/share/BatterySaver/icon.svg");
-        window.show_all ();
+        window.show_all (); //show all the things
         window.resizable = false;
     }
 
@@ -44,5 +55,6 @@ class MyApplication : Gtk.Application {
 }
 
 int main (string[] args) {
+
     return new MyApplication ().run (args);
 }
