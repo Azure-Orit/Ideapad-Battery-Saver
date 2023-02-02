@@ -15,11 +15,3 @@ Tested on IdeaPad 3 15ALC6 - already working at the device
 - meson
 - ninja
 
-## To-do list
-
-- Check status before openning;
-
-
-
-
-
