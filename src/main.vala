@@ -12,30 +12,30 @@ class MyWindow : Gtk.ApplicationWindow {
 		bat_status.set_xalign (0);
         var switcher = new Gtk.Switch ();
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
-		FileInputStream @a = conservation_mode.read ();
-		DataInputStream b = new DataInputStream (@a);        
+		FileInputStream @fis0 = conservation_mode.read ();
+		DataInputStream dis0 = new DataInputStream (@fis0);        
 		string line;
-		while ((line = b.read_line ()) != null) {
+		while ((line = dis0.read_line ()) != null) {
 			if (int.parse (line) == 1){
 				switcher.set_active (true);
             	}
 		}
 		File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
-		FileInputStream @c = cycle_count.read ();
-		DataInputStream d = new DataInputStream (@c); 
-		string string_cycles = d.read_line ();
+		FileInputStream @fis1 = cycle_count.read ();
+		DataInputStream dis1 = new DataInputStream (@fis1); 
+		string string_cycles = dis1.read_line ();
 		var charge_cycles_value = new Gtk.Label (string_cycles);
 		charge_cycles_value.set_xalign (0);
 		File capacity = File.new_for_path ("/sys/class/power_supply/BAT0/capacity");
-		FileInputStream @e = capacity.read ();
-		DataInputStream f = new DataInputStream (@e); 
-		string string_capacity = f.read_line ();
+		FileInputStream @fis2 = capacity.read ();
+		DataInputStream dis2 = new DataInputStream (@fis2); 
+		string string_capacity = dis2.read_line ();
 		var capacity_value = new Gtk.Label (string_capacity);
 		capacity_value.set_xalign (0);
 		File status = File.new_for_path ("/sys/class/power_supply/BAT0/status");
-		FileInputStream @g = status.read ();
-		DataInputStream h = new DataInputStream (@g); 
-		string string_status = h.read_line ();
+		FileInputStream @fis3 = status.read ();
+		DataInputStream dis3 = new DataInputStream (@fis3); 
+		string string_status = dis3.read_line ();
 		var status_value = new Gtk.Label (string_status);
 		status_value.set_xalign (0);
 
