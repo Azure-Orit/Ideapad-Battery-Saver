@@ -8,6 +8,10 @@ WIP
 
 Tested on IdeaPad 3 15ALC6
 
+## Screenshot
+
+![alt text](data/screenshot.png)
+
 ## Dependencies
 
 - gtk+3.0-dev
