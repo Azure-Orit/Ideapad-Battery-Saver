@@ -4,7 +4,6 @@ class MyWindow : Gtk.ApplicationWindow {
         this.border_width = 20;
         var bat_threshold = new Gtk.Label ("Battery Threshold Status");
 		var charge_cycles = new Gtk.Label ("Charge Cyles");
-		var charge_cycles_value = new Gtk.Label ("");
         var switcher = new Gtk.Switch ();
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
         File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
@@ -15,10 +14,15 @@ class MyWindow : Gtk.ApplicationWindow {
 			if (int.parse (line) == 1){
 				switcher.set_active (true);
             	}
-	}
+		}
+		FileInputStream @fis = cycle_count.read ();
+		DataInputStream gis = new DataInputStream (@fis); 
+		string string_cycles = gis.read_line ();
+		var charge_cycles_value = new Gtk.Label (string_cycles);
 
         switcher.notify["active"].connect (switcher_cb);
         var grid = new Gtk.Grid ();
+		
         grid.set_column_spacing (10);
 		grid.set_row_spacing (10);
         grid.attach (bat_threshold, 0, 0, 1, 1);
