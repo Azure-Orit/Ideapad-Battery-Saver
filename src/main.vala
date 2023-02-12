@@ -2,10 +2,13 @@ class MyWindow : Gtk.ApplicationWindow {
     internal MyWindow (MyApplication app) {
         Object (application: app, title: "Ideapad Battery Saver");
         this.border_width = 20;
-        var label = new Gtk.Label ("Battery Threshold Status");
+        var bat_threshold = new Gtk.Label ("Battery Threshold Status");
+		var charge_cycles = new Gtk.Label ("Charge Cyles");
+		var charge_cycles_value = new Gtk.Label ("");
         var switcher = new Gtk.Switch ();
-        File file = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
-        FileInputStream @is = file.read ();
+        File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
+        File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
+		FileInputStream @is = conservation_mode.read ();
 		DataInputStream dis = new DataInputStream (@is);        
 		string line;
 		while ((line = dis.read_line ()) != null) {
@@ -17,8 +20,11 @@ class MyWindow : Gtk.ApplicationWindow {
         switcher.notify["active"].connect (switcher_cb);
         var grid = new Gtk.Grid ();
         grid.set_column_spacing (10);
-        grid.attach (label, 0, 0, 1, 1);
+		grid.set_row_spacing (10);
+        grid.attach (bat_threshold, 0, 0, 1, 1);
         grid.attach (switcher, 1, 0, 1, 1);
+		grid.attach (charge_cycles, 0, 1, 1, 1);
+		grid.attach (charge_cycles_value, 1, 1, 1, 1);
         this.add (grid);
         
 }
