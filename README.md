@@ -15,3 +15,6 @@ Tested on IdeaPad 3 15ALC6
 - meson
 - ninja
 
+## Todo List
+- Add Battery Cycle counter
+- Convert to GTK4
