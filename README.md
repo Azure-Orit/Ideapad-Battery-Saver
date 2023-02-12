@@ -16,5 +16,4 @@ Tested on IdeaPad 3 15ALC6
 - ninja
 
 ## Todo List
-- Add battery cycle counter
 - Convert to GTK4
