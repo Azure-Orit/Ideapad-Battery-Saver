@@ -3,32 +3,56 @@ class MyWindow : Gtk.ApplicationWindow {
         Object (application: app, title: "Ideapad Battery Saver");
         this.border_width = 20;
         var bat_threshold = new Gtk.Label ("Battery Threshold Status");
+		bat_threshold.set_xalign (0);
 		var charge_cycles = new Gtk.Label ("Charge Cyles");
+		charge_cycles.set_xalign (0);
+		var bat_lvl = new Gtk.Label ("Battery Level");
+		bat_lvl.set_xalign (0);
+		var bat_status = new Gtk.Label ("Current State");
+		bat_status.set_xalign (0);
         var switcher = new Gtk.Switch ();
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
-        File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
-		FileInputStream @is = conservation_mode.read ();
-		DataInputStream dis = new DataInputStream (@is);        
+		FileInputStream @a = conservation_mode.read ();
+		DataInputStream b = new DataInputStream (@a);        
 		string line;
-		while ((line = dis.read_line ()) != null) {
+		while ((line = b.read_line ()) != null) {
 			if (int.parse (line) == 1){
 				switcher.set_active (true);
             	}
 		}
-		FileInputStream @fis = cycle_count.read ();
-		DataInputStream gis = new DataInputStream (@fis); 
-		string string_cycles = gis.read_line ();
+		File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
+		FileInputStream @c = cycle_count.read ();
+		DataInputStream d = new DataInputStream (@c); 
+		string string_cycles = d.read_line ();
 		var charge_cycles_value = new Gtk.Label (string_cycles);
+		charge_cycles_value.set_xalign (0);
+		File capacity = File.new_for_path ("/sys/class/power_supply/BAT0/capacity");
+		FileInputStream @e = capacity.read ();
+		DataInputStream f = new DataInputStream (@e); 
+		string string_capacity = f.read_line ();
+		var capacity_value = new Gtk.Label (string_capacity);
+		capacity_value.set_xalign (0);
+		File status = File.new_for_path ("/sys/class/power_supply/BAT0/status");
+		FileInputStream @g = status.read ();
+		DataInputStream h = new DataInputStream (@g); 
+		string string_status = h.read_line ();
+		var status_value = new Gtk.Label (string_status);
+		status_value.set_xalign (0);
 
         switcher.notify["active"].connect (switcher_cb);
         var grid = new Gtk.Grid ();
 		
         grid.set_column_spacing (10);
 		grid.set_row_spacing (10);
-        grid.attach (bat_threshold, 0, 0, 1, 1);
-        grid.attach (switcher, 1, 0, 1, 1);
-		grid.attach (charge_cycles, 0, 1, 1, 1);
-		grid.attach (charge_cycles_value, 1, 1, 1, 1);
+		grid.attach (bat_lvl, 0, 0, 1, 1);
+		grid.attach (capacity_value, 1, 0, 1, 1);
+		grid.attach (bat_status, 0, 1, 1, 1);
+		grid.attach (status_value, 1, 1, 2, 1);
+		grid.attach (charge_cycles, 0, 2, 1, 1);
+		grid.attach (charge_cycles_value, 1, 2, 1, 1);
+        grid.attach (bat_threshold, 0, 3, 1, 1);
+        grid.attach (switcher, 1, 3, 1, 1);
+
         this.add (grid);
         
 }
