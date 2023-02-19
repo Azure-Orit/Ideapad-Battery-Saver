@@ -21,4 +21,4 @@ Tested on IdeaPad 3 15ALC6
 
 ## Todo List
 - Convert to GTK4
-- Create loop to update labels every 5 seconds
+- Live update data
