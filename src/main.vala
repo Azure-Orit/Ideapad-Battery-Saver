@@ -1,16 +1,24 @@
 class MyWindow : Gtk.ApplicationWindow {
+	private Gtk.Label bat_threshold;
+	private Gtk.Label charge_cycles;
+	private Gtk.Label bat_lvl;
+	private Gtk.Label bat_status;
+	private Gtk.Switch switcher;
+	private Gtk.Label charge_cycles_value;
+	private Gtk.Label capacity_value;
+	private Gtk.Label status_value;
     internal MyWindow (MyApplication app) {
         Object (application: app, title: "Ideapad Battery Saver");
         this.border_width = 20;
-        var bat_threshold = new Gtk.Label ("Battery Threshold Status");
+        bat_threshold = new Gtk.Label ("Battery Threshold Status");
 		bat_threshold.set_xalign (0);
-		var charge_cycles = new Gtk.Label ("Charge Cyles");
+		charge_cycles = new Gtk.Label ("Charge Cyles");
 		charge_cycles.set_xalign (0);
-		var bat_lvl = new Gtk.Label ("Battery Level");
+		bat_lvl = new Gtk.Label ("Battery Level");
 		bat_lvl.set_xalign (0);
-		var bat_status = new Gtk.Label ("Current State");
+		bat_status = new Gtk.Label ("Current State");
 		bat_status.set_xalign (0);
-        var switcher = new Gtk.Switch ();
+        switcher = new Gtk.Switch ();
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
 		FileInputStream @fis0 = conservation_mode.read ();
 		DataInputStream dis0 = new DataInputStream (@fis0);        
@@ -77,6 +85,9 @@ class MyApplication : Gtk.Application {
     	}
 }
 
+
 int main (string[] args) {
-    	return new MyApplication ().run (args);
+	MyApplication app = new MyApplication();
+   	return app.run (args);
 }
+
