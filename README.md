@@ -4,8 +4,6 @@
 
 Battery Conservation Mode Setting app for Ideapads
 
-WIP
-
 Tested on IdeaPad 3 15ALC6
 
 ## Screenshot
@@ -19,6 +17,3 @@ Tested on IdeaPad 3 15ALC6
 - meson
 - ninja
 
-## Todo List
-- Convert to GTK4
-- Live update data
