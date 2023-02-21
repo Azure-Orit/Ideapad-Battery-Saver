@@ -63,7 +63,7 @@ class MyWindow : Gtk.ApplicationWindow {
         switcher.notify["active"].connect (switcher_cb);
         var grid = new Gtk.Grid ();
 		
-        grid.set_column_spacing (10);
+        grid.set_column_spacing (30);
 		grid.set_row_spacing (10);
 		grid.attach (bat_lvl, 0, 0, 1, 1);
 		grid.attach (capacity_value, 1, 0, 1, 1);
@@ -90,6 +90,7 @@ class MyApplication : Gtk.Application {
 	protected override void activate () {
         	var window = new MyWindow (this);
         	window.icon = new Gdk.Pixbuf.from_file("/usr/local/share/BatterySaver/icon.svg");
+			window.set_default_size (300, 80);
         	window.show_all (); //show all the things
         	window.resizable = false;
     	}
