@@ -18,6 +18,9 @@ class MyWindow : Gtk.ApplicationWindow {
 		bat_lvl.set_xalign (0);
 		bat_status = new Gtk.Label ("Current State");
 		bat_status.set_xalign (0);
+		capacity_value = new Gtk.Label ("");
+		charge_cycles_value = new Gtk.Label ("");
+		status_value = new Gtk.Label ("");
         switcher = new Gtk.Switch ();
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
 		FileInputStream @fis0 = conservation_mode.read ();
@@ -29,23 +32,33 @@ class MyWindow : Gtk.ApplicationWindow {
             	}
 		}
 		File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
-		FileInputStream @fis1 = cycle_count.read ();
-		DataInputStream dis1 = new DataInputStream (@fis1); 
-		string string_cycles = dis1.read_line ();
-		var charge_cycles_value = new Gtk.Label (string_cycles);
-		charge_cycles_value.set_xalign (0);
-		File capacity = File.new_for_path ("/sys/class/power_supply/BAT0/capacity");
-		FileInputStream @fis2 = capacity.read ();
-		DataInputStream dis2 = new DataInputStream (@fis2); 
-		string string_capacity = dis2.read_line ();
-		var capacity_value = new Gtk.Label (string_capacity);
-		capacity_value.set_xalign (0);
-		File status = File.new_for_path ("/sys/class/power_supply/BAT0/status");
-		FileInputStream @fis3 = status.read ();
-		DataInputStream dis3 = new DataInputStream (@fis3); 
-		string string_status = dis3.read_line ();
-		var status_value = new Gtk.Label (string_status);
-		status_value.set_xalign (0);
+		Timeout.add(50, () => {
+			FileInputStream @fis1 = cycle_count.read ();
+			DataInputStream dis1 = new DataInputStream (@fis1); 
+			string string_cycles = dis1.read_line ();
+			charge_cycles_value.set_label (string_cycles);
+			charge_cycles_value.set_xalign (0);
+			return true;
+		});
+		Timeout.add(50, () => {
+			File capacity = File.new_for_path ("/sys/class/power_supply/BAT0/capacity");
+			FileInputStream @fis2 = capacity.read ();
+			DataInputStream dis2 = new DataInputStream (@fis2); 
+			string string_capacity = dis2.read_line ();
+			capacity_value.set_label (string_capacity);
+			capacity_value.set_xalign (0);
+			return true;
+		});
+		Timeout.add(50, () => {
+			File status = File.new_for_path ("/sys/class/power_supply/BAT0/status");
+			FileInputStream @fis3 = status.read ();
+			DataInputStream dis3 = new DataInputStream (@fis3); 
+			string string_status = dis3.read_line ();
+			status_value.set_label (string_status);
+			status_value.set_xalign (0);
+			return true;
+		});
+		
 
         switcher.notify["active"].connect (switcher_cb);
         var grid = new Gtk.Grid ();
