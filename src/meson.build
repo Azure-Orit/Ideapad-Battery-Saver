@@ -1,6 +1,7 @@
 dependencies = [
     posix,
     dependency('gtk+-3.0'),
+    meson.get_compiler('c').find_library('m', required: true)
 ]
 
 sources = files('main.vala')
