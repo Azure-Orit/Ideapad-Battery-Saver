@@ -4,9 +4,11 @@ class MyWindow : Gtk.ApplicationWindow {
 	private Gtk.Label bat_lvl;
 	private Gtk.Label bat_status;
 	private Gtk.Switch switcher;
+	private Gtk.Label bat_health;
 	private Gtk.Label charge_cycles_value;
 	private Gtk.Label capacity_value;
 	private Gtk.Label status_value;
+	private Gtk.Label percentage_value;
     internal MyWindow (MyApplication app) {
         Object (application: app, title: "Ideapad Battery Saver");
         this.border_width = 20;
@@ -18,9 +20,12 @@ class MyWindow : Gtk.ApplicationWindow {
 		bat_lvl.set_xalign (0);
 		bat_status = new Gtk.Label ("Current State");
 		bat_status.set_xalign (0);
+		bat_health = new Gtk.Label ("Battery Health");
+		bat_health.set_xalign (0);
 		capacity_value = new Gtk.Label ("");
 		charge_cycles_value = new Gtk.Label ("");
 		status_value = new Gtk.Label ("");
+		percentage_value = new Gtk.Label ("");
         switcher = new Gtk.Switch ();
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
 		FileInputStream @fis0 = conservation_mode.read ();
@@ -31,8 +36,8 @@ class MyWindow : Gtk.ApplicationWindow {
 				switcher.set_active (true);
             	}
 		}
-		File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
 		Timeout.add(50, () => {
+			File cycle_count = File.new_for_path ("/sys/class/power_supply/BAT0/cycle_count");
 			FileInputStream @fis1 = cycle_count.read ();
 			DataInputStream dis1 = new DataInputStream (@fis1); 
 			string string_cycles = dis1.read_line ();
@@ -58,6 +63,25 @@ class MyWindow : Gtk.ApplicationWindow {
 			status_value.set_xalign (0);
 			return true;
 		});
+		Timeout.add(50, () => {
+			File energy_full = File.new_for_path ("/sys/class/power_supply/BAT0/energy_full");
+			FileInputStream @fis4 = energy_full.read ();
+			DataInputStream dis4 = new DataInputStream (@fis4); 
+			string string_energy_full = dis4.read_line ();
+			float double_energy_full = float.parse (string_energy_full);
+			File energy_full_design= File.new_for_path ("/sys/class/power_supply/BAT0/energy_full_design");
+			FileInputStream @fis5 = energy_full_design.read ();
+			DataInputStream dis5 = new DataInputStream (@fis5); 
+			string string_energy_full_design = dis5.read_line ();
+			float double_energy_full_design = float.parse (string_energy_full_design);
+			float 100_times = double_energy_full*100;
+			float x = 100_times/double_energy_full_design;
+			float x_rounded = Math.roundf(x * 100) / 100;
+			string string_x = x_rounded.to_string();
+			percentage_value.set_label (string_x );
+			percentage_value.set_xalign (0);
+			return true;
+		});
 		
 
         switcher.notify["active"].connect (switcher_cb);
@@ -71,8 +95,10 @@ class MyWindow : Gtk.ApplicationWindow {
 		grid.attach (status_value, 1, 1, 2, 1);
 		grid.attach (charge_cycles, 0, 2, 1, 1);
 		grid.attach (charge_cycles_value, 1, 2, 1, 1);
-        grid.attach (bat_threshold, 0, 3, 1, 1);
-        grid.attach (switcher, 1, 3, 1, 1);
+		grid.attach (bat_health, 0, 3, 1, 1);
+		grid.attach (percentage_value, 1, 3, 1, 1);
+        grid.attach (bat_threshold, 0, 4, 1, 1);
+        grid.attach (switcher, 1, 4, 1, 1);
 
         this.add (grid);
         
