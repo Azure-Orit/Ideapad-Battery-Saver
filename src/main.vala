@@ -1,32 +1,32 @@
-class MyWindow : Gtk.ApplicationWindow {
-	private Gtk.Label bat_threshold;
-	private Gtk.Label charge_cycles;
-	private Gtk.Label bat_lvl;
-	private Gtk.Label bat_status;
-	private Gtk.Switch switcher;
-	private Gtk.Label bat_health;
-	private Gtk.Label charge_cycles_value;
-	private Gtk.Label capacity_value;
-	private Gtk.Label status_value;
-	private Gtk.Label percentage_value;
+using Gtk;
+
+class MyWindow : ApplicationWindow {
+	private Label bat_threshold;
+	private Label charge_cycles;
+	private Label bat_lvl;
+	private Label bat_status;
+	private Switch switcher;
+	private Label bat_health;
+	private Label charge_cycles_value;
+	private ProgressBar capacity_value;
+	private Label status_value;
+	private ProgressBar percentage_value;
     internal MyWindow (MyApplication app) {
         Object (application: app, title: "Ideapad Battery Saver");
         this.border_width = 20;
-        bat_threshold = new Gtk.Label ("Battery Threshold Status");
+        bat_threshold = new Label ("Battery Threshold Status");
 		bat_threshold.set_xalign (0);
-		charge_cycles = new Gtk.Label ("Charge Cyles");
+		charge_cycles = new Label ("Charge Cyles");
 		charge_cycles.set_xalign (0);
-		bat_lvl = new Gtk.Label ("Battery Level");
-		bat_lvl.set_xalign (0);
-		bat_status = new Gtk.Label ("Current State");
+		bat_lvl = new Label ("Battery Level");
+		bat_status = new Label ("Current State");
 		bat_status.set_xalign (0);
-		bat_health = new Gtk.Label ("Battery Health");
-		bat_health.set_xalign (0);
-		capacity_value = new Gtk.Label ("");
-		charge_cycles_value = new Gtk.Label ("");
-		status_value = new Gtk.Label ("");
-		percentage_value = new Gtk.Label ("");
-        switcher = new Gtk.Switch ();
+		bat_health = new Label ("Battery Health");
+		capacity_value = new ProgressBar ();
+		charge_cycles_value = new Label ("");
+		status_value = new Label ("");
+		percentage_value = new ProgressBar ();
+        switcher = new Switch ();
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
 		FileInputStream @fis0 = conservation_mode.read ();
 		DataInputStream dis0 = new DataInputStream (@fis0);        
@@ -42,7 +42,6 @@ class MyWindow : Gtk.ApplicationWindow {
 			DataInputStream dis1 = new DataInputStream (@fis1); 
 			string string_cycles = dis1.read_line ();
 			charge_cycles_value.set_label (string_cycles);
-			charge_cycles_value.set_xalign (0);
 			return true;
 		});
 		Timeout.add(50, () => {
@@ -50,8 +49,10 @@ class MyWindow : Gtk.ApplicationWindow {
 			FileInputStream @fis2 = capacity.read ();
 			DataInputStream dis2 = new DataInputStream (@fis2); 
 			string string_capacity = dis2.read_line ();
-			capacity_value.set_label (string_capacity);
-			capacity_value.set_xalign (0);
+			double capacity_double = double.parse (string_capacity);
+			double energy = capacity_double/100;
+			capacity_value.set_fraction (energy);
+			capacity_value.set_show_text (true);
 			return true;
 		});
 		Timeout.add(50, () => {
@@ -60,7 +61,6 @@ class MyWindow : Gtk.ApplicationWindow {
 			DataInputStream dis3 = new DataInputStream (@fis3); 
 			string string_status = dis3.read_line ();
 			status_value.set_label (string_status);
-			status_value.set_xalign (0);
 			return true;
 		});
 		Timeout.add(50, () => {
@@ -77,35 +77,35 @@ class MyWindow : Gtk.ApplicationWindow {
 			float 100_times = double_energy_full*100;
 			float x = 100_times/double_energy_full_design;
 			float x_rounded = Math.roundf(x * 100) / 100;
-			string string_x = x_rounded.to_string();
-			percentage_value.set_label (string_x );
-			percentage_value.set_xalign (0);
+			float x_100 = x_rounded/100;
+			percentage_value.set_fraction (x_100);
+			percentage_value.set_show_text (true);
 			return true;
 		});
 		
 
         switcher.notify["active"].connect (switcher_cb);
-        var grid = new Gtk.Grid ();
+        var grid = new Grid ();
 		
         grid.set_column_spacing (30);
 		grid.set_row_spacing (10);
-		grid.attach (bat_lvl, 0, 0, 1, 1);
-		grid.attach (capacity_value, 1, 0, 1, 1);
-		grid.attach (bat_status, 0, 1, 1, 1);
-		grid.attach (status_value, 1, 1, 2, 1);
-		grid.attach (charge_cycles, 0, 2, 1, 1);
-		grid.attach (charge_cycles_value, 1, 2, 1, 1);
-		grid.attach (bat_health, 0, 3, 1, 1);
-		grid.attach (percentage_value, 1, 3, 1, 1);
-        grid.attach (bat_threshold, 0, 4, 1, 1);
-        grid.attach (switcher, 1, 4, 1, 1);
+		grid.attach (bat_lvl, 0, 0, 3, 1);
+		grid.attach (capacity_value, 0, 1, 3, 1);
+		grid.attach (bat_status, 0, 2, 1, 1);
+		grid.attach (status_value, 1, 2, 2, 1);
+		grid.attach (charge_cycles, 0, 3, 1, 1);
+		grid.attach (charge_cycles_value, 1, 3, 2, 1);
+		grid.attach (bat_health, 0, 4, 3, 1);
+		grid.attach (percentage_value, 0, 5, 3, 1);
+        grid.attach (bat_threshold, 0, 6, 1, 1);
+        grid.attach (switcher, 2, 6, 1, 1);
 
         this.add (grid);
         
 }
 
 void switcher_cb (Object switcher, ParamSpec pspec) {
-	if ((switcher as Gtk.Switch).get_active())
+	if ((switcher as Switch).get_active())
         	Posix.system("echo 1 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
         else
         	Posix.system("echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
@@ -116,7 +116,7 @@ class MyApplication : Gtk.Application {
 	protected override void activate () {
         	var window = new MyWindow (this);
         	window.icon = new Gdk.Pixbuf.from_file("/usr/local/share/BatterySaver/icon.svg");
-			window.set_default_size (300, 80);
+			window.set_default_size (200, 80);
         	window.show_all (); //show all the things
         	window.resizable = false;
     	}
