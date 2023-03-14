@@ -24,9 +24,12 @@ class MyWindow : ApplicationWindow {
 		bat_health = new Label ("Battery Health");
 		capacity_value = new ProgressBar ();
 		charge_cycles_value = new Label ("");
+		charge_cycles_value.set_halign(Gtk.Align.END);
 		status_value = new Label ("");
+		status_value.set_halign(Gtk.Align.END);
 		percentage_value = new ProgressBar ();
         switcher = new Switch ();
+		switcher.set_halign(Gtk.Align.END);
         File conservation_mode = File.new_for_path ("/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode");
 		FileInputStream @fis0 = conservation_mode.read ();
 		DataInputStream dis0 = new DataInputStream (@fis0);        
