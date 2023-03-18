@@ -18,7 +18,7 @@ class MyWindow : ApplicationWindow {
 		bat_threshold.set_xalign (0);
 		charge_cycles = new Label ("Charge Cyles");
 		charge_cycles.set_xalign (0);
-		bat_lvl = new Label ("Battery Level");
+		bat_lvl = new Label ("Battery State of Charge");
 		bat_status = new Label ("Current State");
 		bat_status.set_xalign (0);
 		bat_health = new Label ("Battery Health");
@@ -94,12 +94,12 @@ class MyWindow : ApplicationWindow {
 		grid.set_row_spacing (10);
 		grid.attach (bat_lvl, 0, 0, 3, 1);
 		grid.attach (capacity_value, 0, 1, 3, 1);
-		grid.attach (bat_status, 0, 2, 1, 1);
-		grid.attach (status_value, 1, 2, 2, 1);
-		grid.attach (charge_cycles, 0, 3, 1, 1);
-		grid.attach (charge_cycles_value, 1, 3, 2, 1);
-		grid.attach (bat_health, 0, 4, 3, 1);
-		grid.attach (percentage_value, 0, 5, 3, 1);
+		grid.attach (bat_health, 0, 2, 3, 1);
+		grid.attach (percentage_value, 0, 3, 3, 1);
+		grid.attach (bat_status, 0, 4, 1, 1);
+		grid.attach (status_value, 1, 4, 2, 1);
+		grid.attach (charge_cycles, 0, 5, 1, 1);
+		grid.attach (charge_cycles_value, 1, 5, 2, 1);
         grid.attach (bat_threshold, 0, 6, 1, 1);
         grid.attach (switcher, 2, 6, 1, 1);
 
