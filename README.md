@@ -15,7 +15,6 @@ Tested on IdeaPad 3 15ALC6
 - gtk3-devel
 - atk-devel
 - cairo-gobject-devel
-- 
 - vala
 - meson
 - ninja
