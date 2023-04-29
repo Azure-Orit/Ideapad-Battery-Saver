@@ -18,4 +18,3 @@ Tested on IdeaPad 3 15ALC6
 - vala
 - meson
 - ninja
-
