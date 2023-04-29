@@ -12,8 +12,11 @@ Tested on IdeaPad 3 15ALC6
 
 ## Dependencies
 
-- gtk+3.0-dev
-- valac
+- gtk3-devel
+- atk-devel
+- cairo-gobject-devel
+- 
+- vala
 - meson
 - ninja
 
