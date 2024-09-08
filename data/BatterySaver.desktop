@@ -5,5 +5,5 @@ Type=Application
 Name=Ideapad Battery Saver
 Comment=A Battery Saver setting app for Ideapad
 Icon=/usr/local/share/BatterySaver/icon.svg
-Exec=/usr/local/bin/BatterySaver-pkexec
+Exec=/usr/local/bin/BatterySaver-launcher
 Categories=System;System-Tools;
