@@ -5,7 +5,7 @@ dependencies = [
 ]
 
 sources = files('main.vala')
-install_data('../data/BatterySaver-pkexec', install_dir : '/usr/local/bin')
+install_data('../data/BatterySaver-launcher', install_dir : '/usr/local/bin')
 install_data('../data/icon.svg', install_dir : get_option('datadir') / 'BatterySaver')
 install_data('../data/BatterySaver.desktop', install_dir : '/usr/share/applications')
 install_data('../data/BatterySaver.policy', install_dir : '/usr/share/polkit-1/actions/')
