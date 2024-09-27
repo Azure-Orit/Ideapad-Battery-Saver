@@ -22,7 +22,7 @@ Tested on IdeaPad 3 15ALC6
 - meson
 - ninja
 
- ### Compilation
+ ### Build
 
 ` cd Ideapad-Battery Saver `
 
