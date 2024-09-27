@@ -1,5 +1,11 @@
-project('com.github.Azure-Orit.Ideapad-Battery-Saver', 'vala', 'c')
+project(
+    'Ideapad Battery Saver', 
+    ['vala', 'c'],
+    version: '1.0',
+    license: 'GPL3'
+)
 
+application_id = 'com.github.Azure-Orit.Ideapad-Battery-Saver'
 posix = meson.get_compiler('vala').find_library('posix')
 
 subdir('src')
