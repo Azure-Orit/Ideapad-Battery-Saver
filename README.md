@@ -24,6 +24,9 @@ Tested on IdeaPad 3 15ALC6
 
 
 ` cd Ideapad-Battery Saver `
+
 ` meson build `
+
 ` cd build `
+
 ` ninja install `
