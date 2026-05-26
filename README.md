@@ -1,5 +1,5 @@
 # ![icon](data/icon.png)   Ideapad Vantage
-## Version 1.2.1+ only available on Codeberg
+## Version 1.2.1+ only available on [Codeberg](https://codeberg.org/strule/Ideapad-Vantage)
 
 
 
